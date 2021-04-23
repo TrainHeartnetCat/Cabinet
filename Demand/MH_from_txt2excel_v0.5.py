@@ -4,6 +4,7 @@ import openpyxl
 import sys
 import io
 import copy
+import warnings
 
 # v0.2 修复主要主题词和扩展主题词定义错误的问题
 
@@ -14,24 +15,28 @@ import copy
 # v0.4 增加功能将*category/xxx类主题词识别成主要主题词category/xxx，暂时认为*category/xxx与category/*xxx相同;
 #      修复程序会将空行也识别成一个词条
 
-# v0.5 代码简化TODO; 实现批量处理每个txt，生成1个总excel表和每个txt的对应excel表，也即n个txt生产n+1个excelTODO
+# v0.5 修复批量处理时，仅保留最后一个txt产生的表格；增加提示使用者当前正在处理的文件标题的功能；增加产生总表的功能
+#      增加出现重复ID的提示
+
+# v0.6 代码简化TODO
 
 # 使用前请先阅读注释
 # 请使用python3运行此脚本
+# 请在windows系统下使用此脚本
 # 重要！请注意泛用性，该脚本遇到不同格式的txt文件时可能需要根据需求进行一定修改
 
 # 功能：可以批量将某个文件下特定格式txt中的内容，按照要求输入并生成对应excel文件
 
 # 请输入txt文件所在文件夹
-files_path = r'C:\Users\OldKuroCat\Desktop\private\try'
+files_path = r'D:\cache\works\Mipy\Cabinet\Demand\try'
 # 请输入生成excel文件的路径
-output_path = r'C:\Users\OldKuroCat\Desktop\private'
+output_path = r'D:\cache\works\Mipy\Cabinet\Demand\result'
 
 '''
 -------------------------------------------------------------------------------------------
 '''
 
-def excel_write(all_dic, output_path): # 可能需要加order_list。不需要了，excel可以自动匹配
+def excel_write(all_dic, output_path, txt_name): # 可能需要加order_list。不需要了，excel可以自动匹配
     # 注意该函数写入excel使用的是openpyxl，而不是xlwt（由于string上限问题）
     xls = openpyxl.Workbook()
     sheet = xls.create_sheet(index=0, title="test")
@@ -56,11 +61,11 @@ def excel_write(all_dic, output_path): # 可能需要加order_list。不需要�
                 sheet.cell(start_row,4).value = all_dic[PMID][MH_type]
         start_row += 1
 
-    file_name = output_path + '/' + 'MH' + '_{0:%Y%m%d%H%M%S}'.format(datetime.datetime.now()) + '.xlsx'
+    file_name = output_path + '/' + txt_name + '_{0:%Y%m%d%H%M%S}'.format(datetime.datetime.now()) + '.xlsx'
     print('The output path is ' + file_name)
+    print('')
     xls.save(file_name)
-    print('excel has been created!')
-    print('work complete!')
+
 
 # TODO 简化代码
 # 这个函数不能直接使用，没有达到功能，必须集成进另一个函数里
@@ -76,25 +81,20 @@ def dicSave(PMID_Mh_dic, PMID, MH_type, Category, piece):
 #     PMID_Mh_dic = {}
 #     pass
 
-
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer,encoding='gb18030')# 修改标准输出，避免gbk无法编译一些符号
+# 这条代码在新版win10下似乎无法运行，暂时先忽略掉
+# sys.stdout = io.TextIOWrapper(sys.stdout.buffer,encoding='gb18030')# 修改标准输出，避免gbk无法编译一些符号
 
 files_list = os.listdir(files_path)# 读取目标文件夹下所有目标文件
 # print(files_list)
-
+All_PMID_dic = {}
 for txt_name in files_list:
+    print('Processing file: ' + txt_name)
     with open(files_path+'/'+txt_name,'r',encoding = 'utf8') as f:
         content = f.readlines()
-    
     # 用来测试文档中有多少个片段，这次是10个，那么all_param的长度应该为10
     at = " ".join(content)
     count_PMID = at.count('PMID-')
     
-    # count_PMID = 0
-    # for i in content:
-    #     if i.startwith('PMID-',0,5)
-
-    # exit(0)
 
     working_content = copy.deepcopy(content)
     all_param = []
@@ -210,7 +210,17 @@ for txt_name in files_list:
                         except:
                             PMID_Mh_dic[PMID]['All_MH'] = tag_content.strip('MH').replace('-','').strip().replace('*','').strip('\n')
 
-
+    for ck in PMID_Mh_dic.keys():
+        if ck in All_PMID_dic.keys():
+            # warnings.warn('Repetition PMID was found: ' + ck + ' in ' + txt_name)
+            print('Warning!')
+            print('UserWarning! Repetition PMID was found: ' + ck + ' in ' + txt_name)
+            print('Please check!')
+    All_PMID_dic.update(PMID_Mh_dic) 
     # print(PMID_Mh_dic['31295471'])
-
-excel_write(PMID_Mh_dic, output_path)
+# PMID_Mh_dic = {'PMID':{'Main_MH':'string', 'Expand_MH':'string', 'All_MH':'string'}}
+    excel_write(PMID_Mh_dic, output_path, txt_name)
+print('Processing: all the content')
+excel_write(All_PMID_dic, output_path, '0All_in_toal')
+print('excel has been created!')
+print('work complete!')
