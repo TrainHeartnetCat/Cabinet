@@ -4,10 +4,10 @@ import openpyxl
 import datetime
 import species
 
-true_energy = './energies_true.txt'
-e_path = './2000sizeN/'
+true_energy = ''
+e_path = ''
 # e_path = './entest'
-output_path = './'
+output_path = ''
 species = species.species
 
 
@@ -54,44 +54,44 @@ def excel_write(all_dic, output_path, species):
     print('excel has been created!')
     exit(0)
 
-#     # all_dic = {'species_name':{'RMSE_range':{divsion_range:count}}}
-#     RMSE_order = {}
-#     order = 2
-#     for key1 in sorted(all_dic.keys()):
-#         for key2 in sorted(all_dic[key1].keys()):
-#             RMSE_order[order] = key2
-#             order += 1
+    # all_dic = {'species_name':{'RMSE_range':{divsion_range:count}}}
+    RMSE_order = {}
+    order = 2
+    for key1 in sorted(all_dic.keys()):
+        for key2 in sorted(all_dic[key1].keys()):
+            RMSE_order[order] = key2
+            order += 1
 
-#     xls = openpyxl.Workbook()
+    xls = openpyxl.Workbook()
 
-#     index_number = 0
-#     for i in sorted(all_dic.keys()):
-#         sheet = xls.create_sheet(index=index_number, title=i)
-#         index_number += 1
+    index_number = 0
+    for i in sorted(all_dic.keys()):
+        sheet = xls.create_sheet(index=index_number, title=i)
+        index_number += 1
 
-#         point_row = 2
+        point_row = 2
 
-#         for point in division_point:
-#             sheet.cell(point_row,1).value = point
-#             for j in range(len(all_dic[i].keys())):
-#                 sheet.cell(1, j + 2).value = 'RMSE ' + str(eval(RMSE_order[j + 2])[0]) + '-' + str(eval(RMSE_order[j + 2])[1]) + 'eV' # 写第一行RMSE范围
-#                 sheet.cell(point_row, j + 2).value = all_dic[i][RMSE_order[j + 2]][point]
-#             point_row += 1
-# else:
-#     # all_dic = {'species_name':{'RMSE_range':[error or energy]}}
-#     xls = openpyxl.Workbook()
-#     index_number = 0
-#     for i in sorted(all_dic.keys()):
-#         sheet = xls.create_sheet(index=index_number, title=i)
-#         index_number += 1
-#         column_number = 1
-#         for j in sorted(all_dic[i].keys()):
-#             sheet.cell(1,column_number).value = 'RMSE ' + str(eval(j)[0]) + '-' + str(eval(j)[1]) + 'eV'# 写第一行RMSE范围
-#             row_number = 2
-#             for error in all_dic[i][j]:
-#                 sheet.cell(row_number, column_number).value = error
-#                 row_number += 1
-#             column_number += 1
+        for point in division_point:
+            sheet.cell(point_row,1).value = point
+            for j in range(len(all_dic[i].keys())):
+                sheet.cell(1, j + 2).value = 'RMSE ' + str(eval(RMSE_order[j + 2])[0]) + '-' + str(eval(RMSE_order[j + 2])[1]) + 'eV' # 写第一行RMSE范围
+                sheet.cell(point_row, j + 2).value = all_dic[i][RMSE_order[j + 2]][point]
+            point_row += 1
+else:
+    # all_dic = {'species_name':{'RMSE_range':[error or energy]}}
+    xls = openpyxl.Workbook()
+    index_number = 0
+    for i in sorted(all_dic.keys()):
+        sheet = xls.create_sheet(index=index_number, title=i)
+        index_number += 1
+        column_number = 1
+        for j in sorted(all_dic[i].keys()):
+            sheet.cell(1,column_number).value = 'RMSE ' + str(eval(j)[0]) + '-' + str(eval(j)[1]) + 'eV'# 写第一行RMSE范围
+            row_number = 2
+            for error in all_dic[i][j]:
+                sheet.cell(row_number, column_number).value = error
+                row_number += 1
+            column_number += 1
 
 
 

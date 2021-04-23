@@ -3,7 +3,7 @@ import os
 # 请按实际需求修改内容
 # 展示xx, xx, xx形式txt中的所有xx，并写成一个tuple
 # 可以根据需求增加展示内容
-target_txt = r'C:\Users\OldKuroCat\Desktop\group2020\new\AD_all.txt'
+target_txt = ''
 
 with open(target_txt, encoding = 'utf8') as f:
 	all_species = f.readlines()
