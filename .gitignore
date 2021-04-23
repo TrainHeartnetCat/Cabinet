@@ -4,4 +4,6 @@
 *.out
 *.pkl
 *.xlsx
+*.txt
 Demand/try*
+Demand/result*
