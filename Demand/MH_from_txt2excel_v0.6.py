@@ -18,7 +18,9 @@ import warnings
 # v0.5 修复批量处理时，仅保留最后一个txt产生的表格；增加提示使用者当前正在处理的文件标题的功能；增加产生总表的功能
 #      增加出现重复ID的提示
 
-# v0.6 代码简化TODO
+# v0.6 增加Date of Publication数据
+
+# v0.7 代码简化TODO
 
 # 使用前请先阅读注释
 # 请使用python3运行此脚本
@@ -48,9 +50,10 @@ def excel_write(all_dic, output_path, txt_name): # 可能需要加order_list。�
     sheet.cell(1,2).value = '主要主题词'
     sheet.cell(1,3).value = '扩展主题词'
     sheet.cell(1,4).value = '所有主题词'
+    sheet.cell(1,5).value = 'DP'
 
     start_row = 2
-    for PMID in all_dic:# {PMID:{Mian_MH: , Expand_MH: , All_MH: }}
+    for PMID in all_dic:# {PMID:{Mian_MH: , Expand_MH: , All_MH: , DP: }}
         sheet.cell(start_row,1).value = PMID
         for MH_type in all_dic[PMID]:
             if MH_type == 'Main_MH':
@@ -59,6 +62,8 @@ def excel_write(all_dic, output_path, txt_name): # 可能需要加order_list。�
                 sheet.cell(start_row,3).value = all_dic[PMID][MH_type]
             if MH_type == 'All_MH':
                 sheet.cell(start_row,4).value = all_dic[PMID][MH_type]
+            if MH_type == 'DP':
+                sheet.cell(start_row,5).value = all_dic[PMID][MH_type]
         start_row += 1
 
     file_name = output_path + '/' + txt_name + '_{0:%Y%m%d%H%M%S}'.format(datetime.datetime.now()) + '.xlsx'
@@ -209,6 +214,9 @@ for txt_name in files_list:
                             PMID_Mh_dic[PMID]['All_MH'] = PMID_Mh_dic[PMID]['All_MH'] + '; ' + tag_content.strip('MH').replace('-','').strip().replace('*','').strip('\n')
                         except:
                             PMID_Mh_dic[PMID]['All_MH'] = tag_content.strip('MH').replace('-','').strip().replace('*','').strip('\n')
+            if 'DP  -' in tag_content:
+                tag_content = tag_content.strip('DP').replace('-','').strip()
+                PMID_Mh_dic[PMID]['DP'] = tag_content
 
     for ck in PMID_Mh_dic.keys():
         if ck in All_PMID_dic.keys():
