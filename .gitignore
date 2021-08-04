@@ -5,6 +5,7 @@
 *.pkl
 *.xlsx
 *.txt
+*.sdf
 Demand/try*
 Demand/result*
 uncompleted*
