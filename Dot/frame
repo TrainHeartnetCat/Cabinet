@@ -4,9 +4,9 @@ digraph {
 
 	graph [fontname ="helvetica"];
 
-	node [fontname ="helvetica", fontsize = 200, style = "bold", penwidth = 12];
+	node [fontname ="helvetica", fontsize = 20, style = "bold", penwidth = 6];
 
-	edge [style = "bold", penwidth = 12, arrowsize = 2];
+	edge [style = "bold", penwidth = 6, arrowsize = 1];
 
 	"CH-O*"
 	H2_g
