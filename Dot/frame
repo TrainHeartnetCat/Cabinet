@@ -1,0 +1,123 @@
+// This is an exemplar for recording grammers and attributes of graphviz which are commonly used in my work
+
+digraph {
+
+	graph [fontname ="helvetica"];
+
+	node [fontname ="helvetica", fontsize = 200, style = "bold", penwidth = 12];
+
+	edge [style = "bold", penwidth = 12, arrowsize = 2];
+
+	"CH-O*"
+	H2_g
+	"CH*"
+	CO_g
+	"O*"
+	"CH-H*"
+	"CHO*"
+	CH4_g
+	"H*"
+	"CH3-H*"
+	"H-CO*"
+	"CO-O*"
+	"CH2-H*"
+	"CO*"
+	"CH2*"
+	"CH3*"
+	CO2_g
+	"CH2*" -> "CH-H*" [style=dashed]
+	"CH-H*" -> "CH*" [color="0.991684625884 1 1" penwidth=2.00835009118]
+	"CH-H*" -> "H*" 
+	"CH*" -> "CH-O*" 
+	"O*" -> "CH-O*"
+	"CH-O*" -> "CHO*" 
+	"CH3*" -> "CH2-H*" 
+	"CH2-H*" -> "CH2*" 
+	"CH2-H*" -> "H*" 
+	CH4_g -> "CH3-H*" 
+	"CH3-H*" -> "CH3*" 
+	"CH3-H*" -> "H*" 
+	"CHO*" -> "H-CO*" 
+	"H-CO*" -> "CO*" 
+	"H-CO*" -> "H*" 
+	"CO*" -> CO_g 
+	CO2_g -> "CO-O*" 
+	"CO-O*" -> "CO*" 
+	"CO-O*" -> "O*" 
+	"H*" -> H2_g 
+	"H*" -> H2_g 
+	"CH2OH*" -> "CH2O-H*" 
+	"CH2O-H*" -> "CH2O*" 
+	"CH2O-H*" -> "H*" 
+	"CH2*" -> "CH2-OH*" 
+	"OH*" -> "CH2-OH*" 
+	"CH2-OH*" -> "CH2OH*" 
+	"HCOO*" -> "CHO-O*" 
+	"CHO-O*" -> "CHO*" 
+	"CHO-O*" -> "O*" 
+	CO2_g -> "H-COO*" 
+	"H*" -> "H-COO*" 
+	"H-COO*" -> "HCOO*" 
+	"CH2OH*" -> "H-CHOH*" 
+	"H-CHOH*" -> "H*" 
+	"H-CHOH*" -> "CHOH*" 
+	"CH3*" -> "CH3-OH*" 
+	"OH*" -> "CH3-OH*" 
+	"CH3-OH*" -> "CH3OH*" 
+	"CH2OH*" -> "H-CH2OH*" 
+	"H*" -> "H-CH2OH*" 
+	"H-CH2OH*" -> "CH3OH*" 
+	"CH3OH*" -> "CH3O-H*" 
+	"CH3O-H*" -> "CH3O*" 
+	"CH3O-H*" -> "H*" 
+	"COOH*" -> "CO-OH*" 
+	"CO-OH*" -> "CO*" 
+	"CO-OH*" -> "OH*" 
+	CO2_g -> "COO-H*" 
+	"H*" -> "COO-H*" 
+	"COO-H*" -> "COOH*" 
+	"CHOH*" -> "CHO-H*" 
+	"CHO-H*" -> "CHO*" 
+	"CHO-H*" -> "H*" 
+	"CH3O*" -> "H-CH2O*" 
+	"H-CH2O*" -> "CH2O*" 
+	"H-CH2O*" -> "H*" 
+	"CH3*" -> "CH3-O*" 
+	"O*" -> "CH3-O*" 
+	"CH3-O*" -> "CH3O*" 
+	"CH2*" -> "CH2-O*" 
+	"O*" -> "CH2-O*" 
+	"CH2-O*" -> "CH2O*" 
+	"CH2O*" -> "H-CHO*" 
+	"H-CHO*" -> "CHO*" 
+	"H-CHO*" -> "H*" 
+	"C*" -> "C-OH*" 
+	"OH*" -> "C-OH*" 
+	"C-OH*" -> "COH*" 
+	"CH*" -> "CH-OH*" 
+	"OH*" -> "CH-OH*" 
+	"CH-OH*" -> "CHOH*" 
+	"CHOH*" -> "H-COH*" 
+	"H-COH*" -> "COH*" 
+	"H-COH*" -> "H*" 
+	"COH*" -> "CO-H*" 
+	"CO-H*" -> "CO*" 
+	"CO-H*" -> "H*" 
+	"O*" -> "O-H*" 
+	"H*" -> "O-H*" 
+	"O-H*" -> "OH*" 
+	"CH*" -> "C-H*" 
+	"C-H*" -> "C*" 
+	"C-H*" -> "H*" 
+	"C*" -> "C-O*" 
+	"O*" -> "C-O*" 
+	"C-O*" -> "CO*" 
+}
+
+
+
+/* 
+http://www.graphviz.org/documentation/
+http://www.graphviz.org/pdf/dotguide.pdf
+dot -Tsvg a.dot -O b.svg
+*/
