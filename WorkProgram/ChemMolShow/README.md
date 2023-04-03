@@ -6,4 +6,4 @@ With some modification, this program is allowed to show the ball and stick style
 Notes:
 2023/04/03
 *TODO*
-Probably due to the update of browsers like edge, chrome, this program cannot show 3D graph properly in the jupyter book.
+Probably due to the update of browsers like edge, chrome, this program currently cannot show 3D graph properly in the jupyter book.
